@@ -1,0 +1,1 @@
+install (FILES "${PROJECT_BINARY_DIR}/walle/config/config.h" DESTINATION include/walle/config)
