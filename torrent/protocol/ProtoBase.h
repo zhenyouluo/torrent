@@ -24,6 +24,38 @@ class ProtoHeader {
 public:
     ProtoHeader():_msgLen(0),_msgCMD(NONE){}
     ~ProtoHeader(){}
+    bool encode(walle::net::Buffer*output)
+    {
+        char intstr[4];
+        intstr[3] = _msgLen%256;
+        intstr[2] = (_msgLen - intstr[3])/256%256;
+        intstr[1] = (_msgLen - intstr[3] - intstr[2]*256)/256/256%256;
+        intstr[0] = (_msgLen - intstr[3] - intstr[2]*256 - intstr[1]*256*256)/256/256/256%256;
+
+        output->append(intstr,4);
+        output->appendInt8((char)_msgCMD);
+        return true;
+    }
+
+    bool decode(walle::net::Buffer*input)
+    {
+        if(input->readableBytes() < 4) {
+            return false;
+        }
+        const char *p = input->peek();
+        _msgLen = p[0]*256*256*256 + p[1]*256*256 + p[2]*256 + p[3];
+        input->retrieve(4);
+        if(_msgLen == 0) {
+            _msgCMD = KEEP_ALIVE;
+
+            return true;
+        }
+        //decode cmd;
+        _msgCMD = input->readInt8();
+        
+        return true;
+        
+    }
 public:
     int32_t _msgLen;
     int32_t _msgCMD;
