@@ -1,12 +1,12 @@
-#ifndef TORRENT_PROTOCOL_CHOKEPROTO_H_
-#define TORRENT_PROTOCOL_CHOKEPROTO_H_
+#ifndef TORRENT_PROTOCOL_UNCHOKEPROTO_H_
+#define TORRENT_PROTOCOL_UNCHOKEPROTO_H_
 #include <torrent/protocol/ProtoBase.h>
 
 namespace torrent {
 
-class ChokeProto : public ProtoBase{
+class UnchokeProto : public ProtoBase{
 public:
-    ChokeProto():ProtoBase()
+    UnchokeProto():ProtoBase()
     {
     }
     ~ChokeProto(){}
@@ -25,3 +25,4 @@ public:
 }
 
 #endif
+

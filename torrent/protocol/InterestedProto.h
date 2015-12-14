@@ -1,15 +1,15 @@
-#ifndef TORRENT_PROTOCOL_CHOKEPROTO_H_
-#define TORRENT_PROTOCOL_CHOKEPROTO_H_
+#ifndef TORRENT_PROTOCOL_INTERESTEDPROTO_H_
+#define TORRENT_PROTOCOL_INTERESTEDPROTO_H_
 #include <torrent/protocol/ProtoBase.h>
 
 namespace torrent {
 
-class ChokeProto : public ProtoBase{
+class InterestedProto : public ProtoBase{
 public:
-    ChokeProto():ProtoBase()
+    InterestedProto():ProtoBase()
     {
     }
-    ~ChokeProto(){}
+    ~InterestedProto(){}
     bool decode( walle::net :: Buffer * input)
     {
         (void)input;
@@ -17,7 +17,7 @@ public:
 
     bool encode(walle::net::Buffer*output)
     {
-        return _header.encode(output);
+        return _header.encode(output); 
     }
 
 };
@@ -25,3 +25,4 @@ public:
 }
 
 #endif
+
