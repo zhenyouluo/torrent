@@ -1,6 +1,9 @@
 #ifndef TORRENT_PROTOCOL_PROTOBASE_H_
 #define TORRENT_PROTOCOL_PROTOBASE_H_
 #include <walle/net/Buffer.h>
+#include <stdint.h>
+#include <assert.h>
+
 using walle::net::Buffer;
 
 namespace torrent {
@@ -44,13 +47,18 @@ public:
         }
         const char *p = input->peek();
         _msgLen = p[0]*256*256*256 + p[1]*256*256 + p[2]*256 + p[3];
-        input->retrieve(4);
+        
         if(_msgLen == 0) {
+            input->retrieve(4);
             _msgCMD = KEEP_ALIVE;
 
             return true;
         }
         //decode cmd;
+        if(_msgLen > input->readableBytes()) {
+            return false;
+        }
+        input->retrieve(4);
         _msgCMD = input->readInt8();
         
         return true;

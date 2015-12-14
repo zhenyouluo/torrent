@@ -17,6 +17,8 @@ public:
 
     bool encode(walle::net::Buffer*output)
     {
+        _header._msgLen = 5;
+        _header._msgCMD = UNCHOKE;
         return _header.encode(output);
     }
 
